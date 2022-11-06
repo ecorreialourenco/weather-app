@@ -1,0 +1,12 @@
+.weather-card-container {
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 10px 5px 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.weather-card-temp {
+  display: block;
+  padding-bottom: 15px;
+}

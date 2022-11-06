@@ -1,0 +1,9 @@
+div.search-container {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.search-input div {
+  border-radius: 15px;
+  background-color: #fff;
+}

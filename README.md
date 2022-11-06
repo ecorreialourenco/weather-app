@@ -1,6 +1,9 @@
-# Getting Started with Create React App
+# Weather APP
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This weather app are build using ReactJs and Typescript.
+To get the weather variables are used the https://openweathermap.org/ endpoints and city list.
+To try this app, you need to have openweather account and key.
+After that, rename ".env.sample" to ".env" and replace the <YOUR_OPEN_WEATHER_KEY> to your openweather key.
 
 ## Available Scripts
 
