@@ -1,9 +1,3 @@
 #root {
   overflow: hidden;
 }
-
-.app {
-  height: 100vh;
-  width: 100vw;
-  background-image: linear-gradient(black, blue);
-}
