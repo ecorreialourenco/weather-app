@@ -18,10 +18,7 @@ export const Main: FC = () => {
 
   useEffect(() => {
     const getCityList = async () => {
-      const options = await getCityOptions().catch((err) => {
-        console.log(JSON.stringify(err));
-        return [];
-      });
+      const options = await getCityOptions();
       dispatch(setCityList(options));
     };
     if (!cityList.length) {
@@ -34,9 +31,6 @@ export const Main: FC = () => {
       const options = await getCityWeather({
         selected: selectedCity,
         appId: appId,
-      }).catch((err) => {
-        console.log(JSON.stringify(err));
-        return [];
       });
       setWeatherList(options);
     };
