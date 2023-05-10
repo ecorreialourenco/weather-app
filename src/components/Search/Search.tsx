@@ -44,8 +44,8 @@ export const Search: FC = () => {
 
   const handleChangeInput = async (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    await getCityByName(e.target.value);
+  ): Promise<void> => {
+    return await getCityByName(e.target.value);
   };
 
   return (
@@ -66,7 +66,7 @@ export const Search: FC = () => {
             <TextField
               placeholder="Insert city name"
               className="search-input"
-              onChange={(e) => handleChangeInput(e)}
+              onChange={handleChangeInput}
               value={selectedCity.toString()}
               {...params}
             />
