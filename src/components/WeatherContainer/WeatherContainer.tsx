@@ -2,7 +2,6 @@ import { Grid } from "@mui/material";
 import { FC } from "react";
 import { Weather } from "../../models/weather.model";
 import { WeatherCard } from "../WeatherCard";
-import "./WeatherContainer.css";
 
 interface WeatherContainerProps {
   list: Weather[];

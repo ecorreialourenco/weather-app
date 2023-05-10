@@ -1,10 +1,17 @@
-import { render, screen, fireEvent, within } from "@testing-library/react";
-import { Search } from "./Search";
+import {
+  act,
+  fireEvent,
+  prettyDOM,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
+import { Main } from "./Main";
 import { Provider } from "react-redux";
 import { store } from "../../store/store";
+import fetchMock from "jest-fetch-mock";
 import { CityList } from "../../models/city.model";
-import { setCityList, setSelectedCity } from "../../store/slices/mainStore";
-import { act } from "react-dom/test-utils";
 import { selectFirstOption } from "../../../jest/selectFirstOption";
 
 const list: CityList[] = [
@@ -40,27 +47,22 @@ const list: CityList[] = [
   },
 ];
 
-const resetStore = () => {
-  act(() => {
-    store.dispatch(setCityList([]));
-    store.dispatch(setSelectedCity(""));
-  });
-};
-
-describe("Search", () => {
+describe("Main", () => {
   jest.useFakeTimers();
+  const OLD_ENV = process.env;
 
-  afterEach(() => {
-    resetStore();
+  beforeEach(() => {
+    fetchMock.resetMocks();
+    process.env = { ...OLD_ENV };
   });
 
-  it("Render Search", () => {
-    store.dispatch(setCityList(list));
+  it("Render Main", async () => {
+    await act(async () => {
+      fetchMock.mockResponseOnce(JSON.stringify(list));
 
-    act(() => {
       render(
         <Provider store={store}>
-          <Search />
+          <Main />
         </Provider>
       );
     });
@@ -68,41 +70,24 @@ describe("Search", () => {
     expect(screen.getByPlaceholderText("Insert city name")).toBeDefined();
   });
 
-  it("Search by city", async () => {
-    act(() => {
-      store.dispatch(setCityList(list));
+  it("Get city weather", async () => {
+    await act(async () => {
+      process.env.REACT_APP_WEATHER_KEY = "123";
+      fetchMock.mockResponseOnce(JSON.stringify(list));
 
       render(
         <Provider store={store}>
-          <Search />
+          <Main />
         </Provider>
       );
     });
 
     const autocomplete = await selectFirstOption();
     const input = within(autocomplete).getByRole("combobox");
+
     expect(input).toHaveValue(`${list[0].name}, ${list[0].country}`);
 
     const { selectedCity } = store.getState().main;
     expect(selectedCity).toBe(list[0].id.toString());
-  });
-
-  it("Clear Search option", async () => {
-    act(() => {
-      store.dispatch(setCityList(list));
-
-      render(
-        <Provider store={store}>
-          <Search />
-        </Provider>
-      );
-    });
-
-    const autocomplete = await selectFirstOption();
-    const closeButton = await screen.getByTestId("CloseIcon");
-    fireEvent.click(closeButton);
-
-    const input = within(autocomplete).getByRole("combobox");
-    expect(input).toHaveValue("");
   });
 });

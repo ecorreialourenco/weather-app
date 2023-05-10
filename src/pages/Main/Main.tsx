@@ -1,7 +1,6 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { setCityList } from "../../store/slices/mainStore";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
 import { getCityOptions } from "../../utils/getCity";
 import { getCityWeather } from "../../utils/getWeather";
@@ -30,13 +29,16 @@ export const Main: FC = () => {
       const options = await getCityOptions();
       dispatch(setCityList(options));
     };
-
-    !cityList.length && getCityList();
+    if (!cityList.length) {
+      getCityList();
+    }
   }, [cityList, dispatch]);
 
   useEffect(() => {
-    if (selectedCity) {
-      appId && getWeather();
+    console.log("🚀 ~ file: Main.tsx:39 ~ useEffect ~ appId:", appId)
+    console.log("🚀 ~ file: Main.tsx:40 ~ useEffect ~ selectedCity:", selectedCity)
+    if (appId && selectedCity) {
+      getWeather();
       localStorage.setItem("selected", selectedCity);
     }
   }, [selectedCity, getWeather, appId]);
