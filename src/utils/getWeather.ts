@@ -12,7 +12,6 @@ export const getCityWeather = async ({ selected, appId }: GetWeatherProps) => {
   )
     .then(async (res) => {
       const weather = await res.json();
-      console.log("🚀 ~ file: getWeather.ts:15 ~ .then ~ weather:", weather);
       const weatherList: Weather[] = getWeatherData(weather.list);
 
       return weatherList;

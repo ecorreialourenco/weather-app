@@ -42,6 +42,12 @@ export const Search: FC = () => {
     setDefaultValue(val);
   };
 
+  const handleChangeInput = async (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    await getCityByName(e.target.value);
+  };
+
   return (
     <Grid
       container
@@ -60,7 +66,7 @@ export const Search: FC = () => {
             <TextField
               placeholder="Insert city name"
               className="search-input"
-              onChange={(e) => getCityByName(e.target.value)}
+              onChange={handleChangeInput}
               value={selectedCity.toString()}
               {...params}
             />
