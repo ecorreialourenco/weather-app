@@ -3,10 +3,9 @@ import { Autocomplete, Grid, TextField } from "@mui/material";
 import { debounce } from "lodash";
 import { CityOptions } from "../../models/city.model";
 import { setCityOptions } from "../../helpers/setCityOptions";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
 import { setSelectedCity } from "../../store/slices/mainStore";
-import { useDispatch } from "react-redux";
 import "./Search.css";
 
 export const Search: FC = () => {
@@ -34,8 +33,8 @@ export const Search: FC = () => {
     setOptionsList(cityFiltered);
   }, 300);
 
-  const getCityByName = (input: string) => {
-    input.length > 2 && debouncedSearch(input);
+  const getCityByName = async (input: string) => {
+    input.length > 2 && (await debouncedSearch(input));
   };
 
   const handleChangeOption = (e: SyntheticEvent, val: CityOptions | null) => {

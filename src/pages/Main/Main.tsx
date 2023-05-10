@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { setCityList } from "../../store/slices/mainStore";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
@@ -16,14 +16,6 @@ export const Main: FC = () => {
   const [wheatherList, setWeatherList] = useState<Weather[]>([]);
   const appId = process.env.REACT_APP_WEATHER_KEY;
 
-  const getWeather = useCallback(async () => {
-    const options = await getCityWeather({
-      selected: selectedCity,
-      appId: appId,
-    });
-    setWeatherList(options);
-  }, [appId, selectedCity]);
-
   useEffect(() => {
     const getCityList = async () => {
       const options = await getCityOptions();
@@ -35,13 +27,19 @@ export const Main: FC = () => {
   }, [cityList, dispatch]);
 
   useEffect(() => {
-    console.log("🚀 ~ file: Main.tsx:39 ~ useEffect ~ appId:", appId)
-    console.log("🚀 ~ file: Main.tsx:40 ~ useEffect ~ selectedCity:", selectedCity)
+    const getWeather = async () => {
+      const options = await getCityWeather({
+        selected: selectedCity,
+        appId: appId,
+      });
+      setWeatherList(options);
+    };
+
     if (appId && selectedCity) {
       getWeather();
       localStorage.setItem("selected", selectedCity);
     }
-  }, [selectedCity, getWeather, appId]);
+  }, [selectedCity, appId]);
 
   return (
     <div className="main">
