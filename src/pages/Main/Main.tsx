@@ -19,7 +19,6 @@ export const Main: FC = () => {
   useEffect(() => {
     const getCityList = async () => {
       const options = await getCityOptions().catch((err) => {
-        Promise.reject();
         console.log(JSON.stringify(err));
         return [];
       });
@@ -36,7 +35,6 @@ export const Main: FC = () => {
         selected: selectedCity,
         appId: appId,
       }).catch((err) => {
-        Promise.reject();
         console.log(JSON.stringify(err));
         return [];
       });
