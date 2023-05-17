@@ -22,7 +22,7 @@ export const Main: FC = () => {
       dispatch(setCityList(options));
     };
     if (!cityList.length) {
-      getCityList();
+      getCityList().catch((err) => console.log("err", err));
     }
   }, [cityList, dispatch]);
 
@@ -36,7 +36,7 @@ export const Main: FC = () => {
     };
 
     if (appId && selectedCity) {
-      getWeather();
+      getWeather().catch((err) => console.log("err", err));
       localStorage.setItem("selected", selectedCity);
     }
   }, [selectedCity, appId]);
