@@ -45,7 +45,11 @@ export const Search: FC = () => {
   const handleChangeInput = async (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ): Promise<void> => {
-    return await getCityByName(e.target.value);
+    try {
+      await getCityByName(e.target.value);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
