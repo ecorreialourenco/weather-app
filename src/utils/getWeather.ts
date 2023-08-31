@@ -8,7 +8,7 @@ interface GetWeatherProps {
 
 export const getCityWeather = async ({ selected, appId }: GetWeatherProps) => {
   return await fetch(
-    `http://api.openweathermap.org/data/2.5/forecast?id=${selected}&units=metric&APPID=${appId}`
+    `https://api.openweathermap.org/data/2.5/forecast?id=${selected}&units=metric&APPID=${appId}`
   )
     .then(async (res) => {
       const weather = await res.json();
